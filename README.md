@@ -2,6 +2,10 @@
 
 재미로 보는 타로 점 웹앱. Vite + React, 이미지 파일 없이 CSS와 이모지로 카드를 그립니다.
 
+**바로 보기: https://noesis01.github.io/tarot/**
+
+`main` 브랜치에 push하면 GitHub Actions가 자동으로 빌드해서 GitHub Pages에 배포합니다 (`.github/workflows/deploy.yml`).
+
 ## 실행
 
 ```bash
