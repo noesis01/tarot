@@ -1,0 +1,391 @@
+/* ───── 카드 기본 틀 ─────
+   모든 크기는 --w(카드 너비)에 비례. 높이 = 너비 × 1.7 */
+.tcard {
+  --w: 120px;
+  position: relative;
+  display: block;
+  width: var(--w);
+  height: calc(var(--w) * 1.7);
+  padding: 0;
+  border: 0;
+  background: none;
+  perspective: calc(var(--w) * 8);
+}
+button.tcard.is-flipped {
+  cursor: default;
+}
+.tcard-inner {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.3, 0.7, 0.25, 1);
+}
+.tcard.is-flipped .tcard-inner {
+  transform: rotateY(180deg);
+}
+@media (hover: hover) {
+  button.tcard:not(.is-flipped):hover .tcard-inner {
+    transform: translateY(-5px) rotateY(10deg);
+  }
+}
+
+.tface {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: calc(var(--w) * 0.085);
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 calc(var(--w) * 0.04) calc(var(--w) * 0.12) rgba(0, 0, 0, 0.45);
+  border: max(1px, calc(var(--w) * 0.012)) solid var(--edge, var(--gold));
+}
+.tcard-front {
+  transform: rotateY(180deg);
+}
+.tcard-front.is-reversed {
+  transform: rotateY(180deg) rotate(180deg);
+}
+.tcard.is-flipped .tcard-front {
+  animation: reveal-glow 1.3s ease 0.3s both;
+}
+@keyframes reveal-glow {
+  0% {
+    box-shadow: 0 0 0 rgba(246, 227, 180, 0);
+  }
+  35% {
+    box-shadow: 0 0 calc(var(--w) * 0.28) rgba(246, 227, 180, 0.85);
+  }
+  100% {
+    box-shadow: 0 calc(var(--w) * 0.04) calc(var(--w) * 0.12) rgba(0, 0, 0, 0.45);
+  }
+}
+.tcard-static.is-reversed .tface {
+  transform: rotate(180deg);
+}
+
+/* ───── 앞면 ───── */
+.tfront {
+  --edge: var(--gold);
+  --text: var(--gold-soft);
+  --sub: rgba(246, 227, 180, 0.65);
+  --frame: rgba(232, 195, 114, 0.5);
+  --halo: hsl(var(--hue) 75% 62% / 0.28);
+  background: linear-gradient(160deg, hsl(var(--hue) 45% 24%), hsl(var(--hue) 35% 10%));
+  color: var(--text);
+}
+.tf-frame {
+  position: absolute;
+  inset: calc(var(--w) * 0.045);
+  border: 1px solid var(--frame);
+  border-radius: calc(var(--w) * 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: calc(var(--w) * 0.05) calc(var(--w) * 0.035);
+}
+.tf-frame::before {
+  content: '';
+  position: absolute;
+  inset: calc(var(--w) * 0.022);
+  border: 1px solid var(--frame);
+  border-radius: calc(var(--w) * 0.035);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.tf-top {
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: calc(var(--w) * 0.1);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.tf-center {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+.tf-center::before {
+  content: '';
+  position: absolute;
+  width: calc(var(--w) * 0.58);
+  height: calc(var(--w) * 0.58);
+  border-radius: 50%;
+  border: 1px solid var(--frame);
+  background: radial-gradient(circle, var(--halo), transparent 70%);
+}
+.tf-symbol {
+  position: relative;
+  font-size: calc(var(--w) * 0.34);
+  line-height: 1;
+  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+  filter: drop-shadow(0 0 calc(var(--w) * 0.04) hsl(var(--hue) 80% 60% / 0.6));
+}
+.tf-symbol.is-court {
+  font-size: calc(var(--w) * 0.3);
+}
+.tf-suit {
+  position: absolute;
+  right: 12%;
+  bottom: 10%;
+  font-size: calc(var(--w) * 0.12);
+  line-height: 1;
+}
+.tf-pips {
+  position: relative;
+  display: grid;
+  gap: calc(var(--w) * 0.035);
+}
+.tf-pip-row {
+  display: flex;
+  justify-content: center;
+  gap: calc(var(--w) * 0.06);
+}
+.tf-pip {
+  font-size: calc(var(--w) * 0.115);
+  line-height: 1;
+}
+.tf-pips.n2 .tf-pip,
+.tf-pips.n3 .tf-pip {
+  font-size: calc(var(--w) * 0.16);
+}
+.tf-pips.n4 .tf-pip,
+.tf-pips.n5 .tf-pip,
+.tf-pips.n6 .tf-pip {
+  font-size: calc(var(--w) * 0.14);
+}
+.tf-bottom {
+  width: 100%;
+  text-align: center;
+  line-height: 1.15;
+}
+.tf-name {
+  font-size: calc(var(--w) * 0.1);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tf-en {
+  margin-top: calc(var(--w) * 0.02);
+  font-family: var(--font-en);
+  font-size: calc(var(--w) * 0.056);
+  color: var(--sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 작은 카드: 이름은 생략, 심볼 크게 */
+.tfront.is-compact .tf-top {
+  font-size: calc(var(--w) * 0.11);
+  letter-spacing: 0;
+}
+.tfront.is-compact .tf-symbol {
+  font-size: calc(var(--w) * 0.4);
+}
+.tfront.is-compact .tf-center::before {
+  width: calc(var(--w) * 0.66);
+  height: calc(var(--w) * 0.66);
+}
+
+/* 빈티지 앞면 */
+.tfront.st-vintage {
+  --edge: #6b2a1a;
+  --text: #3a2414;
+  --sub: #6e4c33;
+  --frame: rgba(107, 42, 26, 0.55);
+  --halo: hsl(var(--hue) 70% 50% / 0.22);
+  background:
+    linear-gradient(180deg, hsl(var(--hue) 55% 45% / 0.18), transparent 35%),
+    radial-gradient(ellipse at 50% 40%, #f8eed6, #e6d1a3 85%);
+}
+.st-vintage .tf-top {
+  color: #8b2c1c;
+}
+.st-vintage .tf-symbol,
+.st-vintage .tf-pip,
+.st-vintage .tf-suit {
+  filter: sepia(0.55) saturate(0.95);
+}
+
+/* 흑백 앞면 */
+.tfront.st-mono {
+  --edge: #e9e6f0;
+  --text: #f2f0f7;
+  --sub: #a8a5b3;
+  --frame: rgba(233, 230, 240, 0.45);
+  --halo: rgba(255, 255, 255, 0.08);
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 4px),
+    #0e0e12;
+}
+.st-mono .tf-center::before {
+  border-style: dashed;
+}
+.st-mono .tf-symbol,
+.st-mono .tf-pip,
+.st-mono .tf-suit {
+  filter: grayscale(1) contrast(1.2) brightness(1.15);
+}
+
+/* ───── 뒷면 ───── */
+.tback {
+  --edge: var(--gold);
+  background: radial-gradient(circle at 50% 50%, #2a1d5c 0%, #150f33 75%);
+}
+.tb-frame {
+  position: absolute;
+  inset: calc(var(--w) * 0.05);
+  border-radius: calc(var(--w) * 0.05);
+  border: 1px solid rgba(232, 195, 114, 0.65);
+  background-image: radial-gradient(rgba(232, 195, 114, 0.45) 0.7px, transparent 1.3px);
+  background-size: calc(var(--w) * 0.14) calc(var(--w) * 0.14);
+  background-position: center;
+  display: grid;
+  place-items: center;
+}
+.tb-frame::before {
+  content: '';
+  position: absolute;
+  inset: calc(var(--w) * 0.025);
+  border: 1px solid rgba(232, 195, 114, 0.35);
+  border-radius: calc(var(--w) * 0.035);
+}
+.tb-motif {
+  position: relative;
+  width: calc(var(--w) * 0.56);
+  height: calc(var(--w) * 0.56);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1b1440 55%, transparent 72%);
+}
+.tb-moon {
+  width: calc(var(--w) * 0.3);
+  height: calc(var(--w) * 0.3);
+  border-radius: 50%;
+  box-shadow: inset calc(var(--w) * 0.065) calc(var(--w) * -0.03) 0 0 var(--gold);
+  transform: rotate(-15deg);
+  filter: drop-shadow(0 0 calc(var(--w) * 0.03) rgba(232, 195, 114, 0.7));
+}
+.tb-star {
+  position: absolute;
+  color: var(--gold-soft);
+  font-size: calc(var(--w) * 0.085);
+  line-height: 1;
+}
+.tb-star.s1 {
+  top: 8%;
+  right: 12%;
+}
+.tb-star.s2 {
+  bottom: 10%;
+  left: 10%;
+  font-size: calc(var(--w) * 0.06);
+}
+.tb-star.s3 {
+  top: 22%;
+  left: 2%;
+  font-size: calc(var(--w) * 0.05);
+}
+
+/* 빈티지 뒷면: 붉은 바탕 + 마름모 격자 + 햇살 문양 */
+.tback.st-vintage {
+  --edge: #e9d3a1;
+  background: #7b2318;
+}
+.st-vintage .tb-frame {
+  border-color: rgba(233, 211, 161, 0.85);
+  background-image:
+    repeating-linear-gradient(45deg, rgba(233, 211, 161, 0.2) 0 1px, transparent 1px calc(var(--w) * 0.07)),
+    repeating-linear-gradient(-45deg, rgba(233, 211, 161, 0.2) 0 1px, transparent 1px calc(var(--w) * 0.07));
+  background-size: auto;
+}
+.st-vintage .tb-frame::before {
+  border-color: rgba(233, 211, 161, 0.4);
+}
+.st-vintage .tb-motif {
+  background: radial-gradient(circle, #7b2318 60%, transparent 72%);
+}
+.tb-sun {
+  width: calc(var(--w) * 0.44);
+  height: calc(var(--w) * 0.44);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #e9d3a1 0 20%, #7b2318 21% 27%, transparent 28%),
+    repeating-conic-gradient(#e9d3a1 0deg 5deg, transparent 5deg 15deg);
+}
+
+/* 흑백 뒷면: 동심원 */
+.tback.st-mono {
+  --edge: #e9e6f0;
+  background: #0b0b0e;
+}
+.st-mono .tb-frame {
+  border-color: rgba(233, 230, 240, 0.6);
+  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px calc(var(--w) * 0.05));
+  background-size: auto;
+}
+.st-mono .tb-frame::before {
+  border-color: rgba(233, 230, 240, 0.3);
+}
+.st-mono .tb-motif {
+  background: radial-gradient(circle, #0b0b0e 60%, transparent 72%);
+}
+.tb-rings {
+  width: calc(var(--w) * 0.46);
+  height: calc(var(--w) * 0.46);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #e9e6f0 0 10%, transparent 11%),
+    repeating-radial-gradient(
+      circle,
+      transparent 0 calc(var(--w) * 0.03),
+      rgba(233, 230, 240, 0.75) calc(var(--w) * 0.03) calc(var(--w) * 0.037)
+    );
+}
+
+/* ───── 셔플 애니메이션 ───── */
+.shuffle-stack {
+  position: relative;
+  width: var(--w);
+  height: calc(var(--w) * 1.7);
+}
+.shuffle-card {
+  position: absolute;
+  inset: 0;
+  transform: translate(calc(var(--i) * -1px), calc(var(--i) * -1.5px));
+  animation: riffle-left 0.8s ease-in-out 2;
+  animation-delay: calc(var(--i) * 40ms);
+}
+.shuffle-card.go-right {
+  animation-name: riffle-right;
+}
+@keyframes riffle-left {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  30% {
+    transform: translate(-72%, -5%) rotate(-12deg);
+  }
+  60% {
+    transform: translate(-8%, 2%) rotate(-2deg);
+  }
+}
+@keyframes riffle-right {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  30% {
+    transform: translate(72%, -5%) rotate(12deg);
+  }
+  60% {
+    transform: translate(8%, 2%) rotate(2deg);
+  }
+}
