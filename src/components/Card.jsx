@@ -1,4 +1,6 @@
-// 카드 그림 — 이미지 없이 CSS + 이모지로 그린다.
+import { getStyle } from '../data/decks'
+
+// 카드 그림 — CSS + 이모지로 그리고, '1909 원판' 디자인만 스캔 이미지(public/cards)를 쓴다.
 // 크기는 부모에서 --w(카드 너비) CSS 변수로 지정하며, 모든 글자 크기가 그에 비례한다.
 
 const PIP_ROWS = {
@@ -32,7 +34,27 @@ function Pips({ n, symbol }) {
   )
 }
 
+// 1909 원판 스캔 (Pamela Colman Smith, 퍼블릭 도메인) — base가 './'라 상대 경로
+const imageSrc = (name) => `${import.meta.env.BASE_URL}cards/${name}.jpg`
+const isImageStyle = (styleId) => Boolean(getStyle(styleId).image)
+
+// 뒤집기 전에 미리 받아 두기 (카드를 고르는 순간 호출)
+export function preloadCard(card, styleId) {
+  if (!isImageStyle(styleId) || typeof Image === 'undefined') return
+  new Image().src = imageSrc(card.key)
+}
+
+function ImageFace({ name, styleId, className }) {
+  return (
+    <div className={`tface st-${styleId} is-image ${className}`}>
+      <img className="t-img" src={imageSrc(name)} alt="" draggable={false} decoding="async" />
+    </div>
+  )
+}
+
 export function CardFace({ card, styleId = 'night', compact = false, className = '' }) {
+  if (isImageStyle(styleId)) return <ImageFace name={card.key} styleId={styleId} className={`tfront ${className}`} />
+
   const isMinor = card.arcana === 'minor'
   const isPip = isMinor && card.rank >= 2 && card.rank <= 10
   const isCourt = isMinor && card.rank >= 11
@@ -68,6 +90,7 @@ export function CardFace({ card, styleId = 'night', compact = false, className =
 }
 
 export function CardBack({ styleId = 'night', className = '' }) {
+  if (isImageStyle(styleId)) return <ImageFace name="back" styleId={styleId} className={`tback ${className}`} />
   return (
     <div className={`tface tback st-${styleId} ${className}`}>
       <div className="tb-frame">

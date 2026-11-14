@@ -187,6 +187,12 @@ export default function Intro({ settings, question, topic, optionA, optionB, onS
           })}
         </div>
 
+        {CARD_STYLES.find((s) => s.id === settings.styleId)?.image && (
+          <p className="muted small credit">
+            그림: Pamela Colman Smith (1909) · 퍼블릭 도메인 · 스캔 출처 Wikimedia Commons
+          </p>
+        )}
+
         <label className="toggle">
           <input
             type="checkbox"

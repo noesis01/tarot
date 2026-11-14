@@ -232,6 +232,21 @@ button.tcard.is-flipped {
   filter: grayscale(1) contrast(1.2) brightness(1.15);
 }
 
+/* 1909 원판 — 스캔 이미지 (앞뒷면 공통) */
+.tface.st-rws {
+  --edge: #cdbf9f;
+  background: #ece2cb;
+}
+.tface .t-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 /* ───── 뒷면 ───── */
 .tback {
   --edge: var(--gold);

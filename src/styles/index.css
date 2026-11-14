@@ -342,9 +342,19 @@ p {
 .spread-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-.deck-grid,
-.style-grid {
+.deck-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.style-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 560px) {
+  .style-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.credit {
+  margin: 8px 2px 0;
 }
 @media (min-width: 720px) {
   .spread-grid {

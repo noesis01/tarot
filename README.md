@@ -1,6 +1,6 @@
 # 🌙 밤의 타로 (Night Tarot)
 
-재미로 보는 타로 점 웹앱. Vite + React, 이미지 파일 없이 CSS와 이모지로 카드를 그립니다.
+재미로 보는 타로 점 웹앱 (Vite + React). 카드 그림은 1909년 웨이트-스미스 타로 원판(퍼블릭 도메인)을 쓰거나, CSS와 이모지로 그린 디자인 중에서 고를 수 있습니다.
 
 **바로 보기: https://noesis01.github.io/tarot/**
 
@@ -32,7 +32,7 @@ npm run dev      # http://localhost:5173
 
 **카드 종류** — 메이저 아르카나 22장 / 풀 덱 78장 / 마이너 아르카나 56장
 
-**카드 디자인** — 밤하늘 금박 / 빈티지 양피지 / 흑백 판화
+**카드 디자인** — 1909 원판(기본) / 밤하늘 금박 / 빈티지 양피지 / 흑백 판화
 
 **역방향** — 켜면 약 30% 확률로 카드가 거꾸로 나오고 역방향 해석이 적용됩니다.
 
@@ -45,9 +45,14 @@ npm run dev      # http://localhost:5173
 
 선택한 설정은 브라우저에 저장되어 다음에 열어도 유지됩니다.
 
+## 그림 출처
+
+'1909 원판' 디자인의 카드 78장과 뒷면은 파멜라 콜먼 스미스(Pamela Colman Smith)가 그린 1909년 웨이트-스미스 타로 초판(Roses & Lilies 뒷면)입니다. 작가가 1951년에 세상을 떠나 저작권 보호 기간이 끝난 퍼블릭 도메인이며, 스캔은 [Wikimedia Commons](https://commons.wikimedia.org/wiki/Category:Rider-Waite_tarot_deck_(Roses_%26_Lilies))에 올라온 Saskia Jansen 소장본 스캔을 360px로 줄여 `public/cards/`에 넣었습니다.
+
 ## 구조
 
 ```
+public/cards/            # 1909 원판 스캔 (major-0.jpg … pentacles-14.jpg, back.jpg)
 src/
 ├─ App.jsx               # step 상태로 화면 전환 (intro → shuffle → pick → reveal → reading)
 ├─ data/

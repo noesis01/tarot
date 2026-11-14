@@ -4,7 +4,7 @@ const KEY = 'night-tarot:settings'
 export const DEFAULT_SETTINGS = {
   spreadId: 'three',
   deckId: 'major',
-  styleId: 'night',
+  styleId: 'rws',
   reversals: true,
 }
 

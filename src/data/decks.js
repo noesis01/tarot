@@ -27,7 +27,9 @@ export const DECKS = [
 ]
 
 // 카드 디자인(그림 스타일)
+// image: true면 public/cards/{card.key}.jpg 그림을 쓴다
 export const CARD_STYLES = [
+  { id: 'rws', title: '1909 원판', desc: '파멜라 콜먼 스미스가 그린 오리지널 그림', image: true },
   { id: 'night', title: '밤하늘 금박', desc: '남보라 밤하늘에 금색 테두리' },
   { id: 'vintage', title: '빈티지 양피지', desc: '오래된 종이와 붉은 잉크' },
   { id: 'mono', title: '흑백 판화', desc: '먹선으로 찍어낸 모노톤' },

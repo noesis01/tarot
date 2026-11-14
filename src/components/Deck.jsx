@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react'
-import { CardBack } from './Card'
+import { CardBack, preloadCard } from './Card'
 import { useWidth } from '../lib/useWidth'
 
 // 덱을 여러 줄의 부채꼴로 펼친다. 폭이 넓으면 22장이 한 줄, 좁으면 여러 줄.
@@ -39,6 +39,11 @@ export default function Deck({ deck, picked, need, positions, styleId, question,
     const t = setTimeout(onDone, 800)
     return () => clearTimeout(t)
   }, [remain, onDone])
+
+  // 원판 디자인이면 고른 카드 그림을 미리 받아 둔다
+  useEffect(() => {
+    picked.forEach((i) => preloadCard(deck[i].card, styleId))
+  }, [picked, deck, styleId])
 
   const next = positions[picked.length]
 
